@@ -1,10 +1,136 @@
-<head>
-<title>PF</title>
-</head>
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>Caller ID</title>
+ </head>
 
-  <body>
-    <h3>Parham Fallah Assignment 3</h3>
-    <br>
-    <a href="/ledcontroll.cgi">Led controller</a>
-  </body>
+ <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+ <style>
+
+   body {
+       background-color: #c9c9c9;
+       color: #e3e3e3;
+       font-family: 'Raleway', sans-serif;
+       font-weight: 100;
+       margin: 0px;
+   }
+
+   /* ***************** header ***************** */
+   #callerIDLogo{
+     width: 30px;
+     height: 30px;
+     display: flex;
+   }
+
+   #header_div li{
+     float: left;
+   }
+
+   #header_div li a {
+       display: block;
+       color: white;
+       text-align: center;
+       padding: 0px  40px;
+       text-decoration: none;
+       font-size: x-large;
+   }
+
+   #header_div li a:hover {
+     background-color: #fb70709e;
+   }
+
+   #header_div ul{
+     list-style-type: none;
+     overflow: hidden;
+     background-color: #ff3a3a9e;
+     display: flex;
+     padding: 2px;
+     margin: 0px;
+   }
+
+   /* ***************** content ***************** */
+   #content_div{
+     overflow: hidden;
+   }
+
+   /* **** left menu **** */
+   #content_left_div{
+     float: left;
+     padding: 1%;
+     background-color: #7756cc;
+     color: white;
+   }
+
+   #content_left_div li a{
+     color: white;
+     text-align: center;
+     padding: 2px 0px;
+     text-decoration: none;
+   }
+
+   #content_left_div li a:hover{
+     color: #fcff75;
+   }
+
+   #content_left_div li{
+     padding: 2px 0px;
+   }
+
+   #content_left_div ul{
+     list-style-type: none;
+     padding: 1px;
+   }
+
+   /* **** main content **** */
+   #content_right_div{
+     float: left;
+     padding: 1%;
+   }
+
+   /* ***************** fotter ***************** */
+   #fotter_div{
+     padding: 1% 5%;
+     margin: 0px;
+     background-color: #89bdd3;
+   }
+
+ </style>
+
+ <body>
+   <!--************ Header ************-->
+   <div class="pageRow" id="header_div">
+       <ul id="header_list">
+         <img src="cid.png" alt="CID" id="callerIDLogo">
+         <li><a href="/">Home</a></li>
+         <li><a href="/ledcontroll.cgi">Led controller</a></li>
+       </ul>
+   </div>
+
+   <!--************ Content ************-->
+   <div class="pageRow" id="content_div">
+
+     <!--************ left menu ************-->
+     <div id="content_left_div">
+       <ul>
+         <li><a href="/">Home</a></li>
+         <li><a href="/ledcontroll.cgi">Led controller</a></li>
+       </ul>
+     </div>
+
+     <!--************ main content ************-->
+     <div id="content_right_div">
+
+     </div>
+
+   </div>
+
+   <!--************ Fotter ************-->
+   <div class="pageRow" id="fotter_div">
+       <p>This is Parham Fallah Micro controller final project</p>
+       <p>BIHE SPRING 2018</p>
+   </div>
+
+ </body>
+
 </html>
