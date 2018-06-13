@@ -1,0 +1,18 @@
+--cpu Cortex-M3
+".\objects\file_config.o"
+".\objects\retarget.o"
+".\objects\spi_lpc17xx.o"
+".\Source\Flash\FS_CM3.lib"
+".\objects\serial.o"
+".\objects\main.o"
+".\objects\system_lpc17xx.o"
+".\objects\startup_lpc17xx.o"
+".\objects\web.o"
+".\objects\http_cgi.o"
+".\objects\net_config.o"
+".\objects\emac_lpc17xx.o"
+".\Source\library_Http\TCP_CM3.lib"
+--strict --scatter ".\Objects\PF_SD.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\PF_SD.map" -o .\Objects\PF_SD.axf
