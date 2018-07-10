@@ -160,7 +160,7 @@ static void dhcp_check () {
 //
 char* getSDData(){
 	
-	char *str;
+	char str[500];
 	FILE *f;
 	int res;
 	int i;
@@ -174,25 +174,39 @@ char* getSDData(){
 		
 	//check if sd card is inserted
 	res = finit(NULL);
+	
+	//
 		if (res == 0) {
-      str = "\n\rSD/MMC Init ok";
+			sprintf(str,"<p>rSD/MMC Init ok</p>");
     }
+		
+	//
     if (res == 1) {
-			
-      str = "\n\rSD/MMC Init Failed\n\rInsert Memory card ...\n\r";
+			sprintf(str, "<p>SD/MMC Init Failed\n\rInsert Memory card ...</p>");
 			
     }else{
-			while (ffind ("M:*.*", &info) == 0)  { /* find whatever is in drive "M0:" */
+		//
+			
+				sprintf(str, "%s<p> Files existing on micro SD</p><ul>" , str);
+				while (ffind ("M:*.*", &info) == 0)  { /* find whatever is in drive "M0:" */
 				
-				str = (char *)("\n\r%-32s %5d bytes, ID: %04d",
+				sprintf((char *)str,"%s <li> <b>%-32s</b> %5d bytes, ID: %04d</li>",
+						str,
             info.name,
             info.size,
             info.fileID);
 				
-			}
-			if (info.fileID == 0)  {
-				str = "\n\rNo files...";
-			}
+				}
+				sprintf(str, "%s</ul>" , str);
+				
+				if (info.fileID == 0)  {
+					sprintf((char *)str, "%s", "<p><br>No files...</b></p>");
+					
+				}
+			
+			
+			//
+			
 		}	
 		fclose(f);
 		return str;

@@ -572,6 +572,21 @@
               <FileType>9</FileType>
               <FilePath>.\Source\Web\xml_http.js</FilePath>
             </File>
+            <File>
+              <FileName>pg_header.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Source\Web\pg_header.inc</FilePath>
+            </File>
+            <File>
+              <FileName>pg_footer.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Source\Web\pg_footer.inc</FilePath>
+            </File>
+            <File>
+              <FileName>sd.cgi</FileName>
+              <FileType>9</FileType>
+              <FilePath>.\Source\Web\sd.cgi</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

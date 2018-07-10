@@ -189,7 +189,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 			break;			
 		//-------------------------------------------------------------------
 		case 'h':
-			len = sprintf((char *)buf,"<p>%s</p>", getSDData());
+			len = sprintf((char *)buf,"%s", getSDData());
 			break;
 		//-------------------------------------------------------------------
 			
