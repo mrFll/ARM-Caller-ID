@@ -45,8 +45,7 @@
        <ul id="header_list">
          <li><a href="/">Home</a></li>
 		 <li><a href="/call.cgi">Call</a></li>
-         <li><a href="/ledcontroll.cgi">Led controller</a></li>
-		 <li><a href="/sd.cgi">SD reader</a></li>
+		 <li><a href="/numbers.cgi">Numbers</a></li>
        </ul>
    </div>
 <div id="content_div">

@@ -147,21 +147,6 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
 			if (str_scomp (var, "canclebtn") == __TRUE) {
         finish_the_call(); // diable the pin that controll the relay to hold the call -> call will finish
       }
-      else if (str_scomp (var, "led0=on") == __TRUE) {
-        P2 |= 0x01;
-      }
-      else if (str_scomp (var, "led1=on") == __TRUE) {
-        P2 |= 0x02;
-      }
-      else if (str_scomp (var, "led2=on") == __TRUE) {
-        P2 |= 0x04;
-      }
-      else if (str_scomp (var, "led3=on") == __TRUE) {
-        P2 |= 0x08;
-      }
-      else if (str_scomp (var, "ctrl=Browser") == __TRUE) {
-        LEDrun = __FALSE;
-      }
     }
   }while (dat);
   free_mem ((OS_FRAME *)var);
