@@ -1,0 +1,18 @@
+
+LCD pins:
+
+	LCD_RW 27
+	LCD_RS 26
+	LCD_E 25
+
+	LCD_DB4 21
+	LCD_DB5 22
+	LCD_DB6 23
+	LCD_DB7 24
+
+
+Telephone pins:
+	
+	call ditector input p0.26
+	
+	connect the phone lone (pick up the phone) pin  p0.25

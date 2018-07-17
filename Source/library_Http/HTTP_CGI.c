@@ -7,6 +7,10 @@
 /* http_demo.c */
 extern U16 AD_in (U32 ch);
 extern U8  get_button (void);
+extern char*  get_cal_status (void);
+extern void  show_massage_to_display (char *data);
+extern void finish_the_call(void);
+
 
 /* at_System.c */
 extern  LOCALM localm[];
@@ -126,6 +130,7 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
 	
 	P2 = 0;
   LEDrun = __TRUE;
+	
   if (len == 0) {
     /* No data or all items (radio, checkbox) are off. */
     LED_out (P2);
@@ -138,7 +143,11 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
     dat = http_get_var (dat, var, 40);
     if (var[0] != 0) {
       /* Parameter found, returned string is non 0-length. */
-      if (str_scomp (var, "led0=on") == __TRUE) {
+			
+			if (str_scomp (var, "canclebtn") == __TRUE) {
+        finish_the_call(); // diable the pin that controll the relay to hold the call -> call will finish
+      }
+      else if (str_scomp (var, "led0=on") == __TRUE) {
         P2 |= 0x01;
       }
       else if (str_scomp (var, "led1=on") == __TRUE) {
@@ -181,19 +190,24 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		case 'l':
       id = 1 << (env[2] - '0');
       len = sprintf((char *)buf,(const char *)&env[4],(P2 & id) ? "checked" : "");
-			break;
-		//-------------------------------------------------------------------
-		case 'b':
-      len = sprintf((char *)buf,"<text><id>button%c</id><on>%s</on></text>",
-                    env[1],(get_button () & (1 << (env[1]-'0'))) ? "true" : "false");	
 			break;			
 		//-------------------------------------------------------------------
 		case 'h':
 			len = sprintf((char *)buf,"%s", getSDData());
 			break;
 		//-------------------------------------------------------------------
+		case 'y':
+      /* Button state - xml file 'button.cgx' */
+      len = sprintf((char *)buf,"<checkbox><id>button%c</id><on>%s</on></checkbox>",
+                    env[1],(get_button () & (1 << (env[1]-'0'))) ? "true" : "false");
+      break;
+		//-------------------------------------------------------------------
+		case 'r':
+			
+			len = sprintf((char *)buf,"<ring><on>%s</on></ring>",get_cal_status ());
+			break;
 			
 	}
-	
+	return ((U16)len);
 }
 

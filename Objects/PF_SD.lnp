@@ -12,6 +12,8 @@
 ".\objects\net_config.o"
 ".\objects\emac_lpc17xx.o"
 ".\Source\library_Http\TCP_CM3.lib"
+".\objects\display4bit.o"
+".\objects\timer.o"
 --strict --scatter ".\Objects\PF_SD.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

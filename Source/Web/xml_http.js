@@ -19,6 +19,7 @@ function updateMultiple(formUpd, callBack, userName, userPassword) {
      processResponse(xmlDoc);
     }
     catch(e) {
+			console.log(e);
      return 0;
     }
     /* Callback function for custom update. */
@@ -36,6 +37,7 @@ function updateMultiple(formUpd, callBack, userName, userPassword) {
 }
 
 function processResponse(xmlDoc) {
+	
  textElementArr = xmlDoc.getElementsByTagName("text");
  console.log(textElementArr);
  for(var i = 0; i < textElementArr.length; i++) {
@@ -66,6 +68,51 @@ function processResponse(xmlDoc) {
    else if(elValue == undefined) {
 
    }
+  }
+ }
+
+console.log(xmlDoc.getElementsByTagName("checkbox"));
+console.log(xmlDoc.getElementsByTagName("ring"));
+	
+checkboxElementArr = xmlDoc.getElementsByTagName("checkbox");
+ for(var i = 0; i < checkboxElementArr.length; i++) {
+  try {
+   elId = checkboxElementArr[i].childNodes[0].childNodes[0].nodeValue;
+   elValue = checkboxElementArr[i].childNodes[1].childNodes[0].nodeValue;
+   if(elValue.match("true"))
+    document.getElementById(elId).checked = true;
+   else
+    document.getElementById(elId).checked = false;
+  }
+  catch(error) {
+   if(elId == undefined) {
+    continue;
+   }
+   else if(elValue == undefined) //we leave current state
+    continue;
+  }
+ }
+
+checkboxElementArr = xmlDoc.getElementsByTagName("ring");
+ for(var i = 0; i < checkboxElementArr.length; i++) {
+  try {
+   elValue = checkboxElementArr[i].childNodes[0].childNodes[0].nodeValue;
+		console.log(elValue);
+   if(elValue.match("true")){
+    document.getElementById("notRing").style.display = "none";
+	 document.getElementById("ring").style.display = "block";
+	 
+   }else{
+     document.getElementById("ring").style.display = "none";
+	 document.getElementById("notRing").style.display = "block";
+	 }
+  }
+  catch(error) {
+   if(elId == undefined) {
+    continue;
+   }
+   else if(elValue == undefined) //we leave current state
+    continue;
   }
  }
 

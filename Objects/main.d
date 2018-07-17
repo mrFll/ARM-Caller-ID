@@ -11,3 +11,4 @@
 .\objects\main.o: C:\Keil_v5\ARM\RV31\INC\Net_Config.h
 .\objects\main.o: C:\Keil_v5\ARM\RV31\INC\File_Config.h
 .\objects\main.o: Source\Serial.h
+.\objects\main.o: Source\display4bit.h

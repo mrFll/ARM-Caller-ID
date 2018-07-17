@@ -1,20 +1,6 @@
  <html>
- <head><title>led controller</title>
- <script language=JavaScript type="text/javascript" src="xml_http.js"></script>
- <script language=JavaScript type="text/javascript">
-
- var pUpdate = new periodicObj("send_data.cgx", 300);
- function periodicUpdate() {
-  if(document.getElementById("refreshChkBox").checked == true) {
-   console.log("checked");
-   updateMultiple(pUpdate);
-   periodicFormTime = setTimeout("periodicUpdate()", pUpdate.period);
-  }else{
-   console.log("no check");
-   clearTimeout(periodicFormTime);
- }
- </script></head>
- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+ <head><title>Caller ID</title>
+	</head>
  <style>
    body {
        background-color: #c9c9c9;
@@ -58,9 +44,9 @@
    <div id="header_div">
        <ul id="header_list">
          <li><a href="/">Home</a></li>
+		 <li><a href="/call.cgi">Call</a></li>
          <li><a href="/ledcontroll.cgi">Led controller</a></li>
 		 <li><a href="/sd.cgi">SD reader</a></li>
-		 <li><a href="/call.cgi">Call</a></li>
        </ul>
    </div>
 <div id="content_div">

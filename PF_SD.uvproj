@@ -523,6 +523,11 @@
               <FileType>1</FileType>
               <FilePath>.\Source\library_Http\HTTP_CGI.c</FilePath>
             </File>
+            <File>
+              <FileName>READ ME.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\READ ME.txt</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -586,6 +591,16 @@
               <FileName>sd.cgi</FileName>
               <FileType>9</FileType>
               <FilePath>.\Source\Web\sd.cgi</FilePath>
+            </File>
+            <File>
+              <FileName>call.cgi</FileName>
+              <FileType>9</FileType>
+              <FilePath>.\Source\Web\call.cgi</FilePath>
+            </File>
+            <File>
+              <FileName>call.cgx</FileName>
+              <FileType>9</FileType>
+              <FilePath>.\Source\Web\call.cgx</FilePath>
             </File>
           </Files>
         </Group>
@@ -740,6 +755,31 @@
                 </CommonProperty>
                 <FileArmAds/>
               </FileOption>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Board</GroupName>
+          <Files>
+            <File>
+              <FileName>display4bit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\display4bit.c</FilePath>
+            </File>
+            <File>
+              <FileName>display4bit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Source\display4bit.h</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Source\timer.h</FilePath>
             </File>
           </Files>
         </Group>
