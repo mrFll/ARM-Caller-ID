@@ -7,9 +7,10 @@
 /* http_demo.c */
 extern U16 AD_in (U32 ch);
 extern U8  get_button (void);
-extern char*  get_cal_status (void);
+extern char*  get_State_Enum (void);
 extern void  show_massage_to_display (char *data);
 extern void finish_the_call(void);
+extern void answer_the_call(void);
 
 
 /* at_System.c */
@@ -24,7 +25,6 @@ extern struct http_cfg  http_config;
 #define http_EnAuth     http_config.EnAuth
 #define http_auth_passw http_config.Passw
 
-extern BOOL LEDrun;
 extern void LED_out (U32 val);
 extern char* getSDData ();
 extern BOOL show_update;
@@ -129,11 +129,10 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
   }
 	
 	P2 = 0;
-  LEDrun = __TRUE;
 	
   if (len == 0) {
     /* No data or all items (radio, checkbox) are off. */
-    LED_out (P2);
+    //LED_out (P2);
     return;
   }
   stpassw = 0;
@@ -145,12 +144,17 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
       /* Parameter found, returned string is non 0-length. */
 			
 			if (str_scomp (var, "canclebtn") == __TRUE) {
+				// if user select finish button on the web, call page
         finish_the_call(); // diable the pin that controll the relay to hold the call -> call will finish
       }
+			else if(str_scomp(var, "answ") == __TRUE){
+				// if user select answer button on the web, call page
+				answer_the_call();
+			}
+			
     }
   }while (dat);
   free_mem ((OS_FRAME *)var);
-  LED_out (P2);
 
   if (stpassw == 0x03) {
     len = strlen ((const char *)passw);
@@ -175,21 +179,11 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		case 'l':
       id = 1 << (env[2] - '0');
       len = sprintf((char *)buf,(const char *)&env[4],(P2 & id) ? "checked" : "");
-			break;			
-		//-------------------------------------------------------------------
-		case 'h':
-			len = sprintf((char *)buf,"%s", getSDData());
 			break;
-		//-------------------------------------------------------------------
-		case 'y':
-      /* Button state - xml file 'button.cgx' */
-      len = sprintf((char *)buf,"<checkbox><id>button%c</id><on>%s</on></checkbox>",
-                    env[1],(get_button () & (1 << (env[1]-'0'))) ? "true" : "false");
-      break;
 		//-------------------------------------------------------------------
 		case 'r':
 			
-			len = sprintf((char *)buf,"<ring><on>%s</on></ring>",get_cal_status ());
+			len = sprintf((char *)buf,"<ring><on>%s</on></ring>",get_State_Enum());
 			break;
 			
 	}

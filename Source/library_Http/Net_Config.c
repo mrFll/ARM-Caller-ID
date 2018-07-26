@@ -578,11 +578,11 @@
 #define HTTP_AUTHREALM "Embedded WEB Server"
 
 //     <s.15>Authentication Username
-//     <i> Default: "admin"
+//     <i> Default: "parham"
 #define HTTP_AUTHUSER  "admin"
 
 //     <s.15>Authentication Password
-//     <i> Default: ""
+//     <i> Default: "admin"
 #define HTTP_AUTHPASSW ""
 
 //   </e>

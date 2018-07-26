@@ -14,7 +14,8 @@ t  <h2>state: <b id="ring" style="display: none;">Ring</b> <b id="notRing">-</b>
 t   <input type="checkbox" disabled id="button0">Ringing
 t    <br><br>
 t  Check Call<input type="checkbox" id="refreshChkBox" onclick="periodicUpdate()"><br>
-t  <button name=canclebtn OnClick="submit();">finish the call</button>
+t  <button name=canclebtn OnClick="submit();">finish the call</button><br>
+t  <button name=answ OnClick="submit();">answer</button>
 t </form>
 i pg_footer.inc
 .

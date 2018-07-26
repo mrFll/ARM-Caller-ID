@@ -539,11 +539,6 @@
               <FilePath>.\Source\Web\index.htm</FilePath>
             </File>
             <File>
-              <FileName>ledcontroll.cgi</FileName>
-              <FileType>9</FileType>
-              <FilePath>.\Source\Web\ledcontroll.cgi</FilePath>
-            </File>
-            <File>
               <FileName>send_data.cgx</FileName>
               <FileType>9</FileType>
               <FilePath>.\Source\Web\send_data.cgx</FilePath>
@@ -588,11 +583,6 @@
               <FilePath>.\Source\Web\pg_footer.inc</FilePath>
             </File>
             <File>
-              <FileName>sd.cgi</FileName>
-              <FileType>9</FileType>
-              <FilePath>.\Source\Web\sd.cgi</FilePath>
-            </File>
-            <File>
               <FileName>call.cgi</FileName>
               <FileType>9</FileType>
               <FilePath>.\Source\Web\call.cgi</FilePath>
@@ -601,6 +591,11 @@
               <FileName>call.cgx</FileName>
               <FileType>9</FileType>
               <FilePath>.\Source\Web\call.cgx</FilePath>
+            </File>
+            <File>
+              <FileName>numbers.cgi</FileName>
+              <FileType>9</FileType>
+              <FilePath>.\Source\Web\numbers.cgi</FilePath>
             </File>
           </Files>
         </Group>

@@ -21,8 +21,8 @@ Target DLL:      UL2CM3.DLL V1.159.0.0
 Dialog DLL:      TARMP1.DLL V1.26.0.0
  
 <h2>Project:</h2>
-D:\UNI\Term 4\Micro\Parham_Fallah_Phase_One\PF_SD.uvproj
-Project File Date:  07/13/2018
+D:\UNI\Term 4\Micro\Parham_Fallah_Phase_Two\PF_SD.uvproj
+Project File Date:  07/17/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
@@ -35,28 +35,30 @@ compiling Retarget.c...
 compiling File_Config.c...
 compiling SPI_LPC17xx.c...
 compiling Serial.c...
+compiling main.c...
+Source\main.c(38): warning:  #188-D: enumerated type mixed with another type
+  enum state callerIdStaus = 
+O_CALL;
+Source\main.c(107): warning:  #111-D: statement is unreachable
+  			break;
+Source\main.c(111): warning:  #111-D: statement is unreachable
+  			break;
+Source\main.c(115): warning:  #111-D: statement is unreachable
+  			break;
+Source\main.c(119): warning:  #940-D: missing return statement at end of non-void function "get_State_Enum" 
+  }
+Source\main.c(141): warning:  #188-D: enumerated type mixed with another type
+  	callerIdStaus = 
+O_CALL;
+Source\main.c(152): warning:  #188-D: enumerated type mixed with another type
+  	callerIdStaus = 
+NSWERED;
+Source\main.c(246): warning:  #188-D: enumerated type mixed with another type
+  					callerIdStaus = 
+INGING;
+Source\main.c: 8 warnings, 0 errors
 assembling startup_LPC17xx.s...
 compiling system_LPC17xx.c...
-compiling main.c...
-Source\main.c(151): warning:  #111-D: statement is unreachable
-  			break;
-Source\main.c(155): warning:  #111-D: statement is unreachable
-  			break;
-Source\main.c(160): warning:  #111-D: statement is unreachable
-  			break;
-Source\main.c(165): warning:  #111-D: statement is unreachable
-  			break;		
-Source\main.c(216): warning:  #111-D: statement is unreachable
-   if ((LPC_GPIO2->FIOPIN & (1 << 11)) == 0) {
-Source\main.c(313): warning:  #1166-D: returning pointer to local variable
-  		return str;
-Source\main.c(267): warning:  #177-D: variable "i"  was declared but never referenced
-  	int i;
-Source\main.c(268): warning:  #177-D: variable "buf"  was declared but never referenced
-  	char buf[16];
-Source\main.c(271): warning:  #177-D: variable "buffer"  was declared but never referenced
-  	unsigned char buffer[1024]; 
-Source\main.c: 9 warnings, 0 errors
 compiling HTTP_CGI.c...
 Source\library_Http\HTTP_CGI.c(29): warning:  #1295-D: Deprecated declaration getSDData - give arg types
   extern char* getSDData ();
@@ -69,10 +71,10 @@ compiling EMAC_LPC17xx.c...
 compiling timer.c...
 compiling Web.c...
 linking...
-Program Size: Code=36516 RO-data=324752 RW-data=156 ZI-data=32352  
+Program Size: Code=25440 RO-data=323596 RW-data=116 ZI-data=26816  
 FromELF: creating hex file...
-".\Objects\PF_SD.axf" - 0 Error(s), 11 Warning(s).
-Build Time Elapsed:  00:00:03
+".\Objects\PF_SD.axf" - 0 Error(s), 10 Warning(s).
+Build Time Elapsed:  00:00:07
 </pre>
 </body>
 </html>
