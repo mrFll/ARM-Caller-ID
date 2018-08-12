@@ -25,6 +25,43 @@
 
 #define NORMAL_MASSAGE "Central Ready"
 
+//-------------------------------------------------- Display variables --------------------------------------------------
+
+uint8_t bs = 0;
+#define BS_INDEX = 0x80;	// LCD 16X2 index
+							/**
+							*		0 -> normanl 	-> -  (default)
+							*		1 -> call 		-> C
+							*		2 -> ring 		-> R
+							*		3 -> online 	-> O
+							*/
+							
+char callerNumber [11] = {'_', '_', '_', '_', 'n', 'u', 'm', '_', '_', '_', '_'};
+#define CALLER_NUMBER = 0x85;	// LCD 16X2 index							
+
+char code [5] = {'C','o','d','e',':'};
+#define CODE = 0xCB;	// LCD 16X2 index	
+
+BOOL relays [4] = {__FALSE, __FALSE, __FALSE, __FALSE};
+#define RELAYS = 0xC6;	// LCD 16X2 index	
+
+// show board state
+void showStatusOnDisplay();
+
+
+// show calling number 
+void showCallerNumberOnDisplay();
+
+// show code 
+void showToneCodeOnDisplay();
+
+// show relay status
+void showRelaysStatusOnDisplay();
+
+void updateDisplay();
+
+// ------------------------------------------------------------------------------------------------------------------------
+
 // -------------------- call state variables ----------------------
 enum state{
 	NO_CALL = 1,
@@ -228,6 +265,84 @@ void show_massage_to_display(char *data){
 	command(0x80);  //X_Y CONFIG  satr 1
 	lcd_putsf(data);
 }
+void updateDisplay(){
+	
+	// show board state
+	showStatusOnDisplay();
+	
+	// show calling number 
+	showCallerNumberOnDisplay();
+	
+	// show code 
+	showToneCodeOnDisplay();
+	
+	// show relay status
+	showRelaysStatusOnDisplay();
+	
+}
+void showToneCodeOnDisplay(){
+	uint8_t counter = 0;
+	
+	for(counter = 0; counter < 5; counter++){
+		command(0xCB + counter);
+		lcd_putchar(code[counter]);
+	}
+}
+void showRelaysStatusOnDisplay(){
+	uint8_t counter = 0;
+
+	for(counter = 0; counter < 4; counter++){
+		command(0xC6 + counter);
+		
+		// relay is open
+		if(relays[counter] == __TRUE){
+			lcd_putchar('^');
+			
+		// relay is close
+		}else if(relays[counter] == __FALSE){
+			lcd_putchar('_');
+			
+		// error
+		}else{
+			lcd_putchar('E');
+		}
+		
+	}
+}
+void showCallerNumberOnDisplay(){
+	uint8_t counter = 0;
+	for(counter = 0; counter < 11; counter++){
+		command(0x85 + counter);
+		lcd_putchar(callerNumber[counter]);
+	}
+}
+void showStatusOnDisplay(){
+	
+	command(0x80);
+	
+	switch(bs){
+	
+		case 0:
+			lcd_putchar('-');			// normanl
+			break;
+		
+		case 1:
+			lcd_putchar('C');			// call
+			break;
+		
+		case 2:
+			lcd_putchar('R');			// ring
+			break;
+		
+		case 3:
+			lcd_putchar('O');			// online
+			break;
+		
+		default:
+			lcd_putchar('E');			// error
+			break;	
+	}
+}
 
 //
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -282,13 +397,19 @@ void uartInit(){
 void gpio_interrupt_set(){
 	
 	LPC_PINCON->PINSEL1 = 0x0;						// set pins to GPIO
-	LPC_GPIO0->FIODIR = 0x2000000;				// make pins input and pin 25 output
-	LPC_GPIO0->FIOCLR = 0x2000000;
+	LPC_GPIO0->FIODIR = 0x2000000;				// make pins input and pin p0.25 output
+	LPC_GPIO0->FIOCLR = 0x2000000;				// Clear this GPIO pins
 	
-	// TODO check near to each other and check with new chema
+	// Clear interupt for pins	
 	LPC_GPIOINT->IO0IntClr = (CALL_PIN | DTMF_DATA_INTR_PIN);		
-	LPC_GPIOINT->IO0IntEnR = (CALL_PIN | DTMF_DATA_INTR_PIN);
 	
+	// Rising interupt
+	LPC_GPIOINT->IO0IntEnR = DTMF_DATA_INTR_PIN;
+	
+	// Falling interupt
+	LPC_GPIOINT->IO0IntEnF = CALL_PIN;	
+	
+	// set function to handle events when interupt 
 	NVIC_EnableIRQ(EINT3_IRQn);	
 	
 }
@@ -337,7 +458,8 @@ int main (void) {
 	
 	dhcp_tout = DHCP_TOUT;
 	
-	show_massage_to_display("Ready master :)");
+	// show System info on desplay
+	updateDisplay();
 
 	timer0Inir();
 	
