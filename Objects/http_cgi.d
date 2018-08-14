@@ -3,3 +3,9 @@
 .\objects\http_cgi.o: C:\Keil_v5\ARM\RV31\INC\RTL.h
 .\objects\http_cgi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\http_cgi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\http_cgi.o: C:\Keil_v5\ARM\Inc\NXP\LPC17xx\lpc17xx.h
+.\objects\http_cgi.o: C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h
+.\objects\http_cgi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\http_cgi.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h
+.\objects\http_cgi.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h
+.\objects\http_cgi.o: C:\Keil_v5\ARM\Inc\NXP\LPC17xx\system_LPC17xx.h

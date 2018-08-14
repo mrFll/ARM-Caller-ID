@@ -597,6 +597,11 @@
               <FileType>9</FileType>
               <FilePath>.\Source\Web\numbers.cgi</FilePath>
             </File>
+            <File>
+              <FileName>codes.cgi</FileName>
+              <FileType>9</FileType>
+              <FilePath>.\Source\Web\codes.cgi</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

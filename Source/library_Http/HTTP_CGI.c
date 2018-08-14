@@ -1,8 +1,7 @@
 #include "Net_Config.h"
 #include <stdio.h>
 #include <string.h>
-
-
+#include "lpc17xx.h"
 
 /* http_demo.c */
 extern U16 AD_in (U32 ch);
@@ -11,6 +10,8 @@ extern char*  get_State_Enum (void);
 extern void  show_massage_to_display (char *data);
 extern void finish_the_call(void);
 extern void answer_the_call(void);
+extern void invertRelay(uint8_t relayNumb);
+extern void delay_main(uint32_t Time)
 
 
 /* at_System.c */
@@ -128,11 +129,8 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
       return;
   }
 	
-	P2 = 0;
-	
   if (len == 0) {
     /* No data or all items (radio, checkbox) are off. */
-    //LED_out (P2);
     return;
   }
   stpassw = 0;
@@ -151,7 +149,21 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
 				// if user select answer button on the web, call page
 				answer_the_call();
 			}
-			
+			else if(str_scomp(var, "setrel1") == __TRUE){
+				invertRelay(1);
+			}
+			else if(str_scomp(var, "setrel2") == __TRUE){
+				invertRelay(2);
+			}
+			else if(str_scomp(var, "setrel3") == __TRUE){
+				invertRelay(3);
+			}
+			else if(str_scomp(var, "setrel4") == __TRUE){
+				invertRelay(4);
+			}
+			else if(str_scomp(var, "rsub1") == __TRUE){
+				show_massage_to_display(var);
+			}
     }
   }while (dat);
   free_mem ((OS_FRAME *)var);

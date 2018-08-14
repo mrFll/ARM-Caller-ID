@@ -1,5 +1,5 @@
  <html>
- <head><title>Caller ID</title>
+ <head><title>TeleController</title>
 	</head>
 	<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
  <style>
@@ -39,6 +39,9 @@
      padding: 1% 5%;
      margin: 0px;
      background-color: #89bdd3;
+	 position:absolute;
+     bottom:0;
+     width:100%;
    }
  </style>
  <body>
@@ -47,6 +50,7 @@
          <li><a href="/">Home</a></li>
 		 <li><a href="/call.cgi">Call</a></li>
 		 <li><a href="/numbers.cgi">Numbers</a></li>
+		 <li><a href="/codes.cgi">codes</a></li>
        </ul>
    </div>
 <div id="content_div">

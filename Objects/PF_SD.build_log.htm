@@ -22,7 +22,7 @@ Dialog DLL:      TARMP1.DLL V1.26.0.0
  
 <h2>Project:</h2>
 D:\UNI\Term 4\Micro\Parham_Fallah_TeleController\PF_SD.uvproj
-Project File Date:  07/17/2018
+Project File Date:  08/13/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
@@ -30,61 +30,109 @@ Rebuild target 'bihe.org'
 custom translating Web.inp...
 Custom: C:\Keil_v5\ARM\bin\fcarm @Source\Web\Web.inp
 FCARM FILE CONVERTER V2.56.0.1
-Completed 9 File(s), Ratio 99%
+Completed 10 File(s), Ratio 99%
 compiling Retarget.c...
-compiling SPI_LPC17xx.c...
 compiling File_Config.c...
+compiling SPI_LPC17xx.c...
 compiling Serial.c...
 assembling startup_LPC17xx.s...
 compiling main.c...
-Source\main.c(49): warning:  #1295-D: Deprecated declaration showStatusOnDisplay - give arg types
+Source\main.c(46): warning:  #1295-D: Deprecated declaration showStatusOnDisplay - give arg types
   void showStatusOnDisplay();
-Source\main.c(53): warning:  #1295-D: Deprecated declaration showCallerNumberOnDisplay - give arg types
+Source\main.c(50): warning:  #1295-D: Deprecated declaration showCallerNumberOnDisplay - give arg types
   void showCallerNumberOnDisplay();
-Source\main.c(56): warning:  #1295-D: Deprecated declaration showToneCodeOnDisplay - give arg types
+Source\main.c(53): warning:  #1295-D: Deprecated declaration showToneCodeOnDisplay - give arg types
   void showToneCodeOnDisplay();
-Source\main.c(59): warning:  #1295-D: Deprecated declaration showRelaysStatusOnDisplay - give arg types
+Source\main.c(56): warning:  #1295-D: Deprecated declaration showRelaysStatusOnDisplay - give arg types
   void showRelaysStatusOnDisplay();
-Source\main.c(61): warning:  #1295-D: Deprecated declaration updateDisplay - give arg types
+Source\main.c(58): warning:  #1295-D: Deprecated declaration updateDisplay - give arg types
   void updateDisplay();
-Source\main.c(74): warning:  #188-D: enumerated type mixed with another type
+Source\main.c(71): warning:  #188-D: enumerated type mixed with another type
   enum state callerIdStaus = 
 O_CALL;
-Source\main.c(167): warning:  #188-D: enumerated type mixed with another type
+Source\main.c(164): warning:  #188-D: enumerated type mixed with another type
   	callerIdStaus = 
 O_CALL;
-Source\main.c(175): warning:  #188-D: enumerated type mixed with another type
+Source\main.c(172): warning:  #188-D: enumerated type mixed with another type
   	callerIdStaus = 
 NSWERED;
-Source\main.c(183): warning:  #111-D: statement is unreachable
+Source\main.c(180): warning:  #111-D: statement is unreachable
   			break;
-Source\main.c(187): warning:  #111-D: statement is unreachable
+Source\main.c(184): warning:  #111-D: statement is unreachable
   			break;
-Source\main.c(191): warning:  #111-D: statement is unreachable
+Source\main.c(188): warning:  #111-D: statement is unreachable
   			break;
-Source\main.c(195): warning:  #940-D: missing return statement at end of non-void function "get_State_Enum" 
+Source\main.c(192): warning:  #940-D: missing return statement at end of non-void function "get_State_Enum" 
   }
-Source\main.c(216): warning:  #188-D: enumerated type mixed with another type
+Source\main.c(213): warning:  #188-D: enumerated type mixed with another type
   					callerIdStaus = 
 INGING;
 Source\main.c: 13 warnings, 0 errors
 compiling system_LPC17xx.c...
-compiling HTTP_CGI.c...
-Source\library_Http\HTTP_CGI.c(29): warning:  #1295-D: Deprecated declaration getSDData - give arg types
-  extern char* getSDData ();
-Source\library_Http\HTTP_CGI.c(35): warning:  #177-D: variable "state"  was declared but never referenced
-  static char const state[][9] = {
-Source\library_Http\HTTP_CGI.c: 2 warnings, 0 errors
 compiling Net_Config.c...
-compiling display4bit.c...
+compiling HTTP_CGI.c...
+Source\library_Http\HTTP_CGI.c(18): error:  #130: expected a "{"
+  extern  LOCALM localm[];
+Source\library_Http\HTTP_CGI.c(36): warning:  #12-D: parsing restarts here after previous syntax error
+  static char const state[][9] = {
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(37): warning:  #174-D: expression has no effect
+    "FREE",
+Source\library_Http\HTTP_CGI.c(47): error:  #65: expected a ";"
+    "CONNECT"};
+Source\library_Http\HTTP_CGI.c(72): error:  #20: identifier "localm" is undefined
+          
+ocM.IpAdr[0]   = s[0];
+Source\library_Http\HTTP_CGI.c(80): error:  #20: identifier "localm" is undefined
+          
+ocM.NetMask[0] = s[0];
+Source\library_Http\HTTP_CGI.c(88): error:  #20: identifier "localm" is undefined
+          
+ocM.DefGW[0]   = s[0];
+Source\library_Http\HTTP_CGI.c(96): error:  #20: identifier "localm" is undefined
+          
+ocM.PriDNS[0]  = s[0];
+Source\library_Http\HTTP_CGI.c(104): error:  #20: identifier "localm" is undefined
+          
+ocM.SecDNS[0]  = s[0];
+Source\library_Http\HTTP_CGI.c(165): error:  #167: argument of type "U8" is incompatible with parameter of type "char *"
+  				show_massage_to_display(var[0]);
+Source\library_Http\HTTP_CGI.c(166): error:  #167: argument of type "U8" is incompatible with parameter of type "char *"
+  				show_massage_to_display(var[1]);
+Source\library_Http\HTTP_CGI.c(167): error:  #167: argument of type "U8" is incompatible with parameter of type "char *"
+  				show_massage_to_display(var[2]);
+Source\library_Http\HTTP_CGI.c(177): error:  #20: identifier "http_config" is undefined
+        str_copy (
+ttp_auth_passw, passw);
+Source\library_Http\HTTP_CGI.c(195): error:  #20: identifier "P2" is undefined
+        len = sprintf((char *)buf,(const char *)&env[4],(P2 & id) ? "checked" : "");
+Source\library_Http\HTTP_CGI.c: 12 warnings, 12 errors
 compiling EMAC_LPC17xx.c...
-compiling Web.c...
+compiling display4bit.c...
 compiling timer.c...
-linking...
-Program Size: Code=25884 RO-data=323596 RW-data=128 ZI-data=26780  
-FromELF: creating hex file...
-".\Objects\PF_SD.axf" - 0 Error(s), 15 Warning(s).
-Build Time Elapsed:  00:00:05
+compiling Web.c...
+".\Objects\PF_SD.axf" - 12 Error(s), 25 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

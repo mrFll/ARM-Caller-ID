@@ -23,17 +23,14 @@
 #define DTMF_DATA_PINS 0x3C0000
 #define CALL_FINISHER_NUMBER 0
 
-#define NORMAL_MASSAGE "Central Ready"
-
 //-------------------------------------------------- Display variables --------------------------------------------------
 
 uint8_t bs = 0;
 #define BS_INDEX = 0x80;	// LCD 16X2 index
 							/**
 							*		0 -> normanl 	-> -  (default)
-							*		1 -> call 		-> C
-							*		2 -> ring 		-> R
-							*		3 -> online 	-> O
+							*		1 -> ring 		-> R
+							*		2 -> online 	-> O
 							*/
 							
 char callerNumber [11] = {'_', '_', '_', '_', 'n', 'u', 'm', '_', '_', '_', '_'};
@@ -216,7 +213,7 @@ void EINT3_IRQHandler(){
 					callerIdStaus = RINGING;
 					show_massage_to_display("      call      ");
 					delay_main(5000);
-					show_massage_to_display(NORMAL_MASSAGE);
+					//show_massage_to_display(NORMAL_MASSAGE);
 				}
 			
 		}else if(((LPC_GPIOINT->IO0IntStatR & DTMF_DATA_INTR_PIN) == DTMF_DATA_INTR_PIN) && (callerIdStaus == ANSWERED)){
@@ -234,7 +231,7 @@ void EINT3_IRQHandler(){
 				finish_the_call();		// diable the router that hold the call
 				show_massage_to_display("Call ended");
 				delay_main(5000);
-				show_massage_to_display(NORMAL_MASSAGE);
+				//show_massage_to_display(NORMAL_MASSAGE);
 				
 			}else{
 				// make string from input variable
@@ -243,7 +240,7 @@ void EINT3_IRQHandler(){
 			// show the data
 			show_massage_to_display(dtmfDataString);
 			delay_main(5000);
-			show_massage_to_display(NORMAL_MASSAGE);
+			//show_massage_to_display(NORMAL_MASSAGE);
 			}
 		}
 	}
@@ -327,14 +324,10 @@ void showStatusOnDisplay(){
 			break;
 		
 		case 1:
-			lcd_putchar('C');			// call
-			break;
-		
-		case 2:
 			lcd_putchar('R');			// ring
 			break;
 		
-		case 3:
+		case 2:
 			lcd_putchar('O');			// online
 			break;
 		
@@ -344,6 +337,22 @@ void showStatusOnDisplay(){
 	}
 }
 
+//
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+													Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+void invertRelay(uint8_t relayNumb){
+	if(relayNumb > 4 || relayNumb < 1){
+		// check if input number is between 1 - 4
+		show_massage_to_display("invalid relay number");
+		delay_main(3000);
+		updateDisplay();
+	}else{
+		// invert ralay variable status
+		relays[relayNumb-1] = !relays[relayNumb-1];
+		showRelaysStatusOnDisplay();
+	}
+}
 //
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 													Main
@@ -447,7 +456,6 @@ void delay_ms (uint32_t Time){
 
 int main (void) {
   
-
   init ();
 	SER_Init ();	
 	lcd_init_4bit();
