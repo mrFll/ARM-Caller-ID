@@ -6,12 +6,11 @@
 /* http_demo.c */
 extern U16 AD_in (U32 ch);
 extern U8  get_button (void);
-extern char*  get_State_Enum (void);
 extern void  show_massage_to_display (char *data);
 extern void finish_the_call(void);
 extern void answer_the_call(void);
 extern void invertRelay(uint8_t relayNumb);
-extern void delay_main(uint32_t Time)
+
 
 
 /* at_System.c */
@@ -194,8 +193,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 			break;
 		//-------------------------------------------------------------------
 		case 'r':
-			
-			len = sprintf((char *)buf,"<ring><on>%s</on></ring>",get_State_Enum());
+			len = sprintf((char *)buf,"<ring><on>%s</on></ring>","");
 			break;
 			
 	}

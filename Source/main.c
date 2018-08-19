@@ -1,12 +1,3 @@
-//struct __FILE { int handle; };
-
-// frequence zone variables
-	//volatile uint32_t inputFreq, inputFreq2;
-	//char Variablestr [10]; 
-	//char Variablestr2 [10];
-
-//char p [10];
-
 #include <stdio.h>
 #include "RTL.h"
 #include "lpc17xx.h"
@@ -16,14 +7,17 @@
 #include "File_Config.h"
 #include "Serial.h"
 #include "display4bit.h"
+#include "i2c.h"
 
 // ring detector variables
 #define CALL_PIN 0x4000000
 #define DTMF_DATA_INTR_PIN 0x20000
 #define DTMF_DATA_PINS 0x3C0000
-#define CALL_FINISHER_NUMBER 0
+
 
 //-------------------------------------------------- Display variables --------------------------------------------------
+
+char realyCodes [4][5] = {{'*','1','1','1','#'},{'*','2','2','2','#'},{'*','3','3','3','#'},{'*','4','4','4','#'}};
 
 uint8_t bs = 0;
 #define BS_INDEX = 0x80;	// LCD 16X2 index
@@ -37,54 +31,26 @@ char callerNumber [11] = {'_', '_', '_', '_', 'n', 'u', 'm', '_', '_', '_', '_'}
 #define CALLER_NUMBER = 0x85;	// LCD 16X2 index							
 
 char code [5] = {'C','o','d','e',':'};
+uint8_t codeIndex = 0;
 #define CODE = 0xCB;	// LCD 16X2 index	
 
 BOOL relays [4] = {__FALSE, __FALSE, __FALSE, __FALSE};
 #define RELAYS = 0xC6;	// LCD 16X2 index	
 
-// show board state
-void showStatusOnDisplay();
 
-
-// show calling number 
-void showCallerNumberOnDisplay();
-
-// show code 
-void showToneCodeOnDisplay();
-
-// show relay status
-void showRelaysStatusOnDisplay();
-
-void updateDisplay();
 
 // ------------------------------------------------------------------------------------------------------------------------
 
-// -------------------- call state variables ----------------------
-enum state{
-	NO_CALL = 1,
-	RINGING,
-	ANSWERED 
-};
-	#define NO_CALL 1
-	#define RINGING 2
-	#define ANSWERED 3
-enum state callerIdStaus = NO_CALL;
-// -----------------------------------------------------------------
-//char ringMessage [20];
-
-BOOL getTone = __FALSE; // USED
+BOOL getTone = __FALSE; 
 	
-	// ring ditector variables
-	uint8_t ring_count = 0;
-
+// ring ditector variables
+uint8_t ring_count = 0;
 	
-	uint8_t NUMBER_OF_WAITING_RINGS = 3;
-	
-	
-	
-	// tele data variable
-	uint8_t dtmfData = 0;
-	char dtmfDataString [10];
+uint8_t NUMBER_OF_WAITING_RINGS = 4;
+		
+// tele data variable
+uint8_t dtmfData = 0;
+char dtmfDataString [10];
 
 
 BOOL show_update;
@@ -104,6 +70,26 @@ extern LOCALM localm[];                       /* Local Machine Settings      */
 **************************************************************/
 void show_massage_to_display(char *data);
 void delay_main(uint32_t Time);
+void  invertRelay(uint8_t relayNumb);
+void showStatusOnDisplay();
+void showCallerNumberOnDisplay();
+void showToneCodeOnDisplay();
+void showRelaysStatusOnDisplay();
+void updateDisplay();
+//
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+												EEPROM
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+void set_realay_code(char code[5] ,uint8_t relayNumb){
+	I2C_WriteNByte( 0xa0, 1 ,(((relayNumb-1)*5)+1) ,code ,5);
+}
+char * get_relay_codes(uint8_t relayNumb){
+	
+	char result [5];
+		I2C_ReadNByte (0xa0, 1, (((relayNumb-1)*5)+1), result, 5);		
+	return result;
+}
+
 //
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 												Ethernet
@@ -155,13 +141,41 @@ static void timer_poll () {
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 												TelePhone
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+char show_number_in_lcd(uint8_t number){
+	char cr[2];
+	
+	if(number != 0){
+		
+		switch(number){
+			
+			case 10:
+				return '0';
+				break;
+			
+			case 11:
+				return '*';
+				break;
+			
+			case 12:
+				return '#';
+				break;
+			
+			default:
+				sprintf(cr,"%d", dtmfData);
+				return cr[0];
+				break;	
+		}
+	}
+}
 void finish_the_call(){
 	
 	// clear relay pin
 	LPC_GPIO0->FIOCLR = 0x2000000;
 	
 	// change call status
-	callerIdStaus = NO_CALL;
+	bs = 0;
+	showStatusOnDisplay();
+	
 }
 void answer_the_call(){
 	
@@ -169,54 +183,36 @@ void answer_the_call(){
 	LPC_GPIO0->FIOSET = 0x2000000;
 	
 	// change call status
-	callerIdStaus = ANSWERED;
-}
-char* get_State_Enum(void){
-	
-	switch(callerIdStaus){
-		
-		case NO_CALL:
-			return "no call";
-			break;
-		
-		case RINGING:
-			return "ringing";
-			break;
-			
-		case ANSWERED:
-			return "answerd";
-			break;
-		
-	}
-	
+	bs = 2;
+	showStatusOnDisplay();
 }
 void EINT3_IRQHandler(){
-	// check if interrupt happened
+	
 	if((LPC_GPIOINT->IntStatus & 0x01) == 0x01)
-	{	
-		
-		if((LPC_GPIOINT->IO0IntStatR & CALL_PIN) == CALL_PIN){
+	{			
+		if((LPC_GPIOINT->IO0IntStatF & CALL_PIN) == CALL_PIN){
 			
 			LPC_GPIOINT->IO0IntClr = CALL_PIN;					// clear the interupt
 			// state of incoming call
 				if(ring_count == NUMBER_OF_WAITING_RINGS){		// after  waiting beeps
-		
-					answer_the_call();
-					ring_count = 0;
-					show_massage_to_display("call starts");
-					delay_main(2000);
+
+					answer_the_call();						// active the relay that start the call
+					ring_count = 0;								// reset the number of 
+					bs = 2;												// means that is phone is picked up and user can enter the code
+					showStatusOnDisplay();	// show changed status on page
 	
 				}
-				else if((ring_count < NUMBER_OF_WAITING_RINGS) & (callerIdStaus != ANSWERED)) // before  waiting beeps  
+				else if((ring_count < NUMBER_OF_WAITING_RINGS) & (bs != 2)) // before  waiting beeps  
 				{
-					ring_count++;												
-					callerIdStaus = RINGING;
-					show_massage_to_display("      call      ");
-					delay_main(5000);
-					//show_massage_to_display(NORMAL_MASSAGE);
+					ring_count++;									// increase ring count 
+					bs = 1;												// change the state to ringing
+					showStatusOnDisplay();	// show state on display
 				}
 			
-		}else if(((LPC_GPIOINT->IO0IntStatR & DTMF_DATA_INTR_PIN) == DTMF_DATA_INTR_PIN) && (callerIdStaus == ANSWERED)){
+		}else if(((LPC_GPIOINT->IO0IntStatR & DTMF_DATA_INTR_PIN) == DTMF_DATA_INTR_PIN)){
+			
+			// TODO TODO TODO TODO && (bs == 2)
+			
 			// **************** DTMF tone detector zone ****************
 			LPC_GPIOINT->IO0IntClr = DTMF_DATA_INTR_PIN;					// clear the interupt
 			// state of incoming data from user
@@ -224,24 +220,91 @@ void EINT3_IRQHandler(){
 			// read pins to get the binary number
 			dtmfData = ((LPC_GPIO0->FIOPIN & DTMF_DATA_PINS) >> 18);
 			
-			// Working with data that got from user 
-			if(dtmfData == CALL_FINISHER_NUMBER){
-				
-				// user press the key that call wil finishing
-				finish_the_call();		// diable the router that hold the call
-				show_massage_to_display("Call ended");
-				delay_main(5000);
-				//show_massage_to_display(NORMAL_MASSAGE);
-				
-			}else{
-				// make string from input variable
-			sprintf(dtmfDataString, "Code: %d" , dtmfData);
+			updateDisplay();
 			
-			// show the data
-			show_massage_to_display(dtmfDataString);
-			delay_main(5000);
-			//show_massage_to_display(NORMAL_MASSAGE);
-			}
+			if(codeIndex < 4){				// get next char of code
+				
+				// claer lcd for code
+				if(codeIndex < 1){
+					code[0] = '_';
+					code[1] = '_';
+					code[2] = '_';
+					code[3] = '_';
+					code[4] = '_';
+				}
+				// init
+				code[codeIndex] = show_number_in_lcd(dtmfData);
+				
+				// increase index of the code
+				codeIndex++;
+				
+				showToneCodeOnDisplay();
+				
+			}else if(codeIndex == 4){		// apply the code 
+
+				uint8_t ic = 0;
+				uint8_t jc = 0;
+				BOOL validCode = __FALSE;
+				BOOL checkNext = __TRUE;
+				
+				// init the last char of user input
+				code[codeIndex] = show_number_in_lcd(dtmfData);
+				
+				// check all the validation list of codes
+				for(ic = 0; ic < 4; ic++){
+					// check all of code char to be valid
+					for(jc = 0; jc < 5; jc++){
+						checkNext &= (realyCodes[ic][jc] == code[jc]);
+					}
+					
+					// action by the validation result
+					if(checkNext){
+						//  if user enter the valid code
+							validCode = __TRUE;
+						
+							// invert relay
+							invertRelay(ic+1);
+						
+							break;
+						
+					}else{
+						checkNext = __TRUE;
+					}
+					
+				}
+				
+					if(validCode){
+						show_massage_to_display("code applied");
+					}else{
+						show_massage_to_display("invalid code");
+						
+					}
+					delay_main(2000);
+					
+					codeIndex = 0;
+		
+					code[0] = 'C';
+					code[1] = 'o';
+					code[2] = 'd';
+					code[3] = 'e';
+					code[4] = ':';
+		
+					updateDisplay();
+				}
+				
+				
+			}else if(codeIndex > 4){ 		// clean the code -- this status may not happend but prevention is better than cure
+				
+				// clear code on display
+				codeIndex = 0;
+				
+				code[0] = 'C';
+				code[1] = 'o';
+				code[2] = 'd';
+				code[3] = 'e';
+				code[4] = ':';
+				
+				showToneCodeOnDisplay();
 		}
 	}
 }
@@ -253,6 +316,27 @@ void TIMER0_IRQHandler (void){
 	
 	show_massage_to_display("TIMER0_IRQH");
 }
+void UART0_IRQHandler(void) {
+	
+	show_massage_to_display("happy");
+	delay_main(1000);
+	
+	/*
+	char* tem ;
+	sprintf(tem, "uart int %d",  UART0_cunter);
+	show_massage_to_display(tem);
+	delay_main(1000);
+	
+	if(UART0_cunter < 19){
+		UART0_buffer[UART0_cunter]= LPC_UART0->RBR;
+		UART0_cunter += 1;
+	}else{
+		LPC_UART0->IER = 0x00;	// Enables the Receive Data Available interrupt 
+		show_massage_to_display(UART0_buffer);
+		delay_main(10000);
+	}
+	*/
+}
 //
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 													Display
@@ -263,6 +347,8 @@ void show_massage_to_display(char *data){
 	lcd_putsf(data);
 }
 void updateDisplay(){
+	
+	show_massage_to_display(" ");
 	
 	// show board state
 	showStatusOnDisplay();
@@ -341,6 +427,17 @@ void showStatusOnDisplay(){
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 													Controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+void changeRelaysStateOnBoard(uint8_t relayNumb){
+	
+		if(relays[relayNumb] == __TRUE){
+			
+			LPC_GPIO0->FIOSET = (1<<(5+relayNumb));
+			
+		}else if(relays[relayNumb] == __FALSE){
+			
+			LPC_GPIO0->FIOCLR = (1<<(5+relayNumb));
+		}
+}
 void invertRelay(uint8_t relayNumb){
 	if(relayNumb > 4 || relayNumb < 1){
 		// check if input number is between 1 - 4
@@ -351,6 +448,7 @@ void invertRelay(uint8_t relayNumb){
 		// invert ralay variable status
 		relays[relayNumb-1] = !relays[relayNumb-1];
 		showRelaysStatusOnDisplay();
+		changeRelaysStateOnBoard(relayNumb-1);
 	}
 }
 //
@@ -363,6 +461,18 @@ static void init () {
   /* Setup and enable the SysTick timer for 100ms. */
   SysTick->LOAD = (SystemCoreClock / 10) - 1;
   SysTick->CTRL = 0x05;
+	
+	// set GPIO function for p0.5 p0.6 p0.7 p0.8
+	LPC_PINCON->PINSEL0  &= ~ ((1<<10) | (1<<11) | (1<<12) | (1<<13) | (1<<14) | (1<<15) | (1<<16) | (1<<17));
+	
+	// set GPIO function for p0.16 to p0.31
+	LPC_PINCON->PINSEL1 = 0x0;						// set pins to GPIO
+	
+	LPC_GPIO0->FIODIR = 0x20001E0;				// make pins input and pin p0.25 output
+	LPC_GPIO0->FIOCLR = 0x20001E0;				// Clear this GPIO pins
+	
+	
+	I2CInit( (uint32_t)I2CMASTER );		   // initialize I2c
 }
 
 void timer0Inir(){
@@ -404,11 +514,7 @@ void uartInit(){
   NVIC_EnableIRQ(UART0_IRQn);	// Enable UART0 Interrupt	
 }
 void gpio_interrupt_set(){
-	
-	LPC_PINCON->PINSEL1 = 0x0;						// set pins to GPIO
-	LPC_GPIO0->FIODIR = 0x2000000;				// make pins input and pin p0.25 output
-	LPC_GPIO0->FIOCLR = 0x2000000;				// Clear this GPIO pins
-	
+
 	// Clear interupt for pins	
 	LPC_GPIOINT->IO0IntClr = (CALL_PIN | DTMF_DATA_INTR_PIN);		
 	
@@ -448,16 +554,17 @@ void delay_ms (uint32_t Time){
         for (i = 0; i < 16666; i++);
     }
 }
-
-
-
-
-
-
+void Delay (uint32_t Time){
+    uint32_t i;
+    i = 0;
+    while (Time--) {
+        for (i = 0; i < 16666; i++);
+    }
+}
 int main (void) {
   
   init ();
-	SER_Init ();	
+	//SER_Init ();	
 	lcd_init_4bit();
 	
 	gpio_interrupt_set();	
@@ -470,7 +577,7 @@ int main (void) {
 	updateDisplay();
 
 	timer0Inir();
-	
+		
   while (1) {
     timer_poll ();
     main_TcpNet ();

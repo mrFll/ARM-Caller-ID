@@ -1,34 +1,5 @@
 Dependencies for Project 'PF_SD', Target 'bihe.org': (DO NOT MODIFY !)
-F (.\Source\Flash\File_Config.c)(0x590496C0)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\file_config.o --omf_browse .\objects\file_config.crf --depend .\objects\file_config.d)
-I (Source\Flash\File_Config.h)(0x532C2440)
-I (C:\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D11B0)
-I (C:\Keil_v5\ARM\RV31\INC\File_lib.c)(0x559D11B0)
-F (.\Source\Flash\Retarget.c)(0x5B0AE644)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522" -DSTDIO-o .\objects\retarget.o --omf_browse .\objects\retarget.crf --depend .\objects\retarget.d)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F64600)
-I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x57F64600)
-I (Source\Flash\rt_sys.h)(0x51C7F68C)
-I (Source\Flash\File_Config.h)(0x532C2440)
-I (C:\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D11B0)
-I (Source\Flash\Serial.h)(0x51C892D4)
-F (.\Source\Flash\SPI_LPC17xx.c)(0x590496C0)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\spi_lpc17xx.o --omf_browse .\objects\spi_lpc17xx.crf --depend .\objects\spi_lpc17xx.d)
-I (Source\Flash\File_Config.h)(0x532C2440)
-I (C:\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D11B0)
-I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\LPC17xx.H)(0x559D12EA)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x559D1CD2)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F64600)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D1CD2)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D1CD2)
-I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\system_LPC17xx.h)(0x57038D4A)
-F (.\Source\Flash\FS_CM3.lib)(0x532C27F4)()
-F (.\Source\Flash\Serial.c)(0x5B0AD72C)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\serial.o --omf_browse .\objects\serial.crf --depend .\objects\serial.d)
-I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\LPC17xx.H)(0x559D12EA)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x559D1CD2)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F64600)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D1CD2)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D1CD2)
-I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\system_LPC17xx.h)(0x57038D4A)
-I (Source\Flash\Serial.h)(0x51C892D4)
-F (.\Source\main.c)(0x5B71E347)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\Source\main.c)(0x5B75BA4F)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F64600)
 I (C:\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D11B0)
 I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\lpc17xx.h)(0x559D12EA)
@@ -42,6 +13,7 @@ I (C:\Keil_v5\ARM\RV31\INC\Net_Config.h)(0x559D11B0)
 I (C:\Keil_v5\ARM\RV31\INC\File_Config.h)(0x559D11B0)
 I (Source\Serial.h)(0x51C892D4)
 I (Source\display4bit.h)(0x5B4986D9)
+I (Source\i2c.h)(0x4FAF8C74)
 F (.\Source\LPC17xx\system_LPC17xx.c)(0x51C892D4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\system_lpc17xx.o --omf_browse .\objects\system_lpc17xx.crf --depend .\objects\system_lpc17xx.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F64600)
 I (Source\LPC17xx\LPC17xx.h)(0x532CC6FC)
@@ -50,10 +22,10 @@ I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D1CD2)
 I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D1CD2)
 I (Source\LPC17xx\system_LPC17xx.h)(0x532CC6FC)
 F (.\startup_LPC17xx.s)(0x5884C083)(--cpu Cortex-M3 -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx--pd "__UVISION_VERSION SETA 522"--list .\listings\startup_lpc17xx.lst --xref -o .\objects\startup_lpc17xx.o --depend .\objects\startup_lpc17xx.d)
-F (.\Source\Web\Web.c)(0x5B71E359)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\web.o --omf_browse .\objects\web.crf --depend .\objects\web.d)
+F (.\Source\Web\Web.c)(0x5B75BBCC)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\web.o --omf_browse .\objects\web.crf --depend .\objects\web.d)
 I (C:\Keil_v5\ARM\RV31\INC\Net_Config.h)(0x559D11B0)
 I (C:\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D11B0)
-F (.\Source\library_Http\HTTP_CGI.c)(0x5B71E357)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\http_cgi.o --omf_browse .\objects\http_cgi.crf --depend .\objects\http_cgi.d)
+F (.\Source\library_Http\HTTP_CGI.c)(0x5B75B9E1)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\http_cgi.o --omf_browse .\objects\http_cgi.crf --depend .\objects\http_cgi.d)
 I (Source\library_Http\Net_Config.h)(0x532C2440)
 I (C:\Keil_v5\ARM\RV31\INC\RTL.h)(0x559D11B0)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F64600)
@@ -65,6 +37,15 @@ I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D1CD2)
 I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D1CD2)
 I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\system_LPC17xx.h)(0x57038D4A)
 F (.\READ ME.txt)(0x5B487078)()
+F (.\Source\i2c.c)(0x5B694C14)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\Inc\NXP\LPC17xx-D__UVISION_VERSION="522"-o .\objects\i2c.o --omf_browse .\objects\i2c.crf --depend .\objects\i2c.d)
+I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\lpc17xx.h)(0x559D12EA)
+I (C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x559D1CD2)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F64600)
+I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559D1CD2)
+I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559D1CD2)
+I (C:\Keil_v5\ARM\Inc\NXP\LPC17xx\system_LPC17xx.h)(0x57038D4A)
+I (Source\i2c.h)(0x4FAF8C74)
+F (.\Source\i2c.h)(0x4FAF8C74)()
 F (.\Source\Web\index.htm)(0x5B71E2FA)()
 F (.\Source\Web\send_data.cgx)(0x5B018569)()
 F (.\Source\Web\Web.inp)(0x5B71BCCD)()
