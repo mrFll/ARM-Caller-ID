@@ -46,7 +46,7 @@ BOOL getTone = __FALSE;
 // ring ditector variables
 uint8_t ring_count = 0;
 	
-uint8_t NUMBER_OF_WAITING_RINGS = 4;
+uint8_t NUMBER_OF_WAITING_RINGS = 3;
 		
 // tele data variable
 uint8_t dtmfData = 0;
@@ -209,7 +209,7 @@ void EINT3_IRQHandler(){
 					showStatusOnDisplay();	// show state on display
 				}
 			
-		}else if(((LPC_GPIOINT->IO0IntStatR & DTMF_DATA_INTR_PIN) == DTMF_DATA_INTR_PIN)){
+		}else if((((LPC_GPIOINT->IO0IntStatR & DTMF_DATA_INTR_PIN) == DTMF_DATA_INTR_PIN) && bs == 2)){
 			
 			// TODO TODO TODO TODO && (bs == 2)
 			
@@ -561,17 +561,32 @@ void Delay (uint32_t Time){
         for (i = 0; i < 16666; i++);
     }
 }
+void initDefaultRelayCodesToEEPROM(){	
+	// init EEPROM for relay1
+	set_realay_code(realyCodes[0], 1);
+	
+	// init EEPROM for relay2
+	set_realay_code(realyCodes[1], 2);
+	
+	// init EEPROM for relay3
+	set_realay_code(realyCodes[2], 3);
+	
+	// init EEPROM for relay4
+	set_realay_code(realyCodes[3], 4);	
+}
 int main (void) {
   
-  init ();
+  init ();										// init 
 	//SER_Init ();	
-	lcd_init_4bit();
+	lcd_init_4bit();						// init LCD 
 	
 	gpio_interrupt_set();	
 	
 	uartInit();	
 	
 	dhcp_tout = DHCP_TOUT;
+	
+	initDefaultRelayCodesToEEPROM();
 	
 	// show System info on desplay
 	updateDisplay();
